@@ -1,5 +1,6 @@
     # https://leetcode.com/problems/max-number-of-k-sum-pairs/
-
+from collections import defaultdict
+from typing import *
 
 class Solution:
     def maxOperations(self, nums, k: int) -> int:
