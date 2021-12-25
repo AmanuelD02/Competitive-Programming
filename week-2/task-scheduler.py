@@ -1,28 +1,64 @@
 from collections import deque
 from typing import *
-import heapq as hq
+from heapq import heapify, heappop, heappush
 def leastInterval(tasks: List[str], n: int) -> int:
-    c = Counter(tasks)
-    di = list(c.items())
+    count = Counter(tasks)
+    heap = []
+    for value in count.values():
+        heap.append(-value)
+    heapify(heap)
+    tasks = 0
+    while heap:
+        maxx = heappop(heap) + 1
+        tasks += 1
+        arr = []
+        for i in range(n):
+            if maxx == 0 and not heap:
+                break
+            elif heap:
+                poped = heappop(heap) +1
+                if poped != 0:
+                    arr.append(poped)
+            tasks += 1
+        if maxx != 0: heappush(heap , maxx)
+        for i in arr:
+            heappush(heap, i)
+    return tasks
 
-    total = 0
 
 
-    hq.heapify(di)
-    queue = deque()
 
-    # Remove K elements from 
-    for i in range(n):
-        queue.append(di.pop())
+
+    # di = list(c.items())
+
+    # total = 0
+
+
+    # hq.heapify(di)
+    # print(di)
+    # queue = deque()
+
+    # # Remove K elements from 
+    # for i in range(n+1):
+    #     queue.append(di.pop())
     
-    print(queue)
-    print(di)
+    # print(queue)
+    # print(di)
 
-    while(queue):
-        total +=1
-        current  = queue.popleft()
-        current[1] -=1
+    # while(queue):
+    #     total +=1
+    #     current  = queue.popleft()
+    #     current = (current[0], current[1]-1)
+    #     di.append(current)
+
+    # print(di)
 
 
 
+
+
+
+
+
+# print(Interval(["A","A","A","B","B","B","C","C","C","C"], 2))
 print(leastInterval(["A","A","A","B","B","B","C"], 2))
