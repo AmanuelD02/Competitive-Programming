@@ -3,9 +3,8 @@ from typing import *
 from heapq import heapify, heappop, heappush
 def leastInterval(tasks: List[str], n: int) -> int:
     count = Counter(tasks)
-    heap = []
-    for value in count.values():
-        heap.append(-value)
+    heap = list(map(lambda x: -x, count.values()))
+
     heapify(heap)
     tasks = 0
     while heap:
