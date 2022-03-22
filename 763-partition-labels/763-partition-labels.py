@@ -1,7 +1,7 @@
 class Solution:
     def partitionLabels(self, s: str) -> List[int]:
         ans, occur = [], {}
-        last = start = i = 0
+        last = start = 0
         
         for a,j in enumerate(s) :
             occur[j] = a
