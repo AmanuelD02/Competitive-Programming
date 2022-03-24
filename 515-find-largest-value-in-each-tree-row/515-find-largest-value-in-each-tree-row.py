@@ -8,12 +8,12 @@ class Solution:
     def largestValues(self, root: Optional[TreeNode]) -> List[int]:
         if not root: return []
         largest, queue = [], deque([root])
-        
         while queue:
             larg = float('-inf')
             for i in range(len(queue)):
                 node = queue.popleft()
-                larg = max(larg, node.val)
+                if node.val > larg:
+                    larg = node.val
                 
                 if node.left: queue.append(node.left)
                 if node.right: queue.append(node.right)
