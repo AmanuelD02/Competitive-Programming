@@ -1,15 +1,18 @@
 class Solution:
     def mostPoints(self, questions: List[List[int]]) -> int:
-        
-        @cache
-        def dfs(index=0):
-            if index >= len(questions):
-                return 0
+        dp = [0] * len(questions)
+        for i in range(len(questions)-1,-1,-1):
+            not_picked, pick = i+1, i+1 + questions[i][1]
+            ans = questions[i][0]
             
-            pick = dfs(index + questions[index][1] + 1) + questions[index][0]
-            not_picked =  dfs(index + 1)
-            
-            return max(pick, not_picked)
+            if not_picked < len(questions):
+                ans = max(ans, dp[not_picked])
+                
+            if pick < len(questions):
+                ans = max(ans, dp[pick] + questions[i][0])
+                
+            dp[i] = ans
         
-        return dfs()
+        return dp[0]
+            
     
