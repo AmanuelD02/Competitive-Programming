@@ -12,3 +12,4 @@ class Solution:
             return max(pick, not_picked)
         
         return dfs()
+    
