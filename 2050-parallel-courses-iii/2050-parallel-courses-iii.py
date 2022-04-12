@@ -23,7 +23,6 @@ class Solution:
         while heap:
             t, item = heappop(heap)
             
-            # print(t, item)
             for n in graph[item]:
                 inDegree[n] -= 1
                 if inDegree[n] == 0:
