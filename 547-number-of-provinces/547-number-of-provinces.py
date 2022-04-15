@@ -20,11 +20,17 @@ class Solution:
                 parent1, parent2 = sorted([parent1, parent2], key = lambda x: child[x] )
                 child[parent2] += child[parent1]
                 parent[parent1] = parent2
+                child[parent1] = 0
                 
         for i in range(N):
             for j in range(N):
                 if i != j and  (isConnected[i][j] or parentConnected(i, j) ):
                     union(i,j)
-
-        return len(set(parent))         
+        
+        
+        result = 0
+        for c in child:
+            result += int(bool(c))
+                
+        return result
                     
