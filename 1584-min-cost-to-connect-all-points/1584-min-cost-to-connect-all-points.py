@@ -1,34 +1,36 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        n = len(points)
+        N = len(points)
+        parent = list(range(N))
+        child = [1] * N
+        def find(node):
+            if parent[node] != node:
+                parent[node] = find(parent[node])
+            return parent[node]
         
-        # Min-heap to store minimum weight edge at top.
-        heap = [(0, 0)]
+        def union(node1, node2):
+            parent1, parent2 = find(node1), find(node2)
+            if parent1 != parent2:
+                parent1, parent2 = sorted([parent1, parent2], key= lambda x: child[x] )
+                parent[parent1] = parent2
+                child[parent2] += child[parent1]
+                return True
+            return False
         
-        # Track nodes which are included in MST.
-        in_mst = [False] * n
         
-        mst_cost = 0
-        edges_used = 0
+        all_edges = []
+        for i in range(N):
+            for j in range(i+1):
+                weight = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1])
+                all_edges.append((weight, i, j))
+        all_edges.sort()
         
-        while edges_used < n:
-            weight, curr_node = heapq.heappop(heap)
-            
-            # If node was already included in MST we will discard this edge.
-            if in_mst[curr_node]:
-                continue
-            
-            in_mst[curr_node] = True
-            mst_cost += weight
-            edges_used += 1
-            
-            for next_node in range(n):
-                # If next node is not in MST, then edge from curr node
-                # to next node can be pushed in the priority queue.
-                if not in_mst[next_node]:
-                    next_weight = abs(points[curr_node][0] - points[next_node][0]) +\
-                                  abs(points[curr_node][1] - points[next_node][1])
-                    
-                    heapq.heappush(heap, (next_weight, next_node))
-                    
-        return mst_cost
+        edges_used = cost = 0
+        
+        for weight, node1, node2 in all_edges:
+            if union(node1, node2):
+                cost += weight
+                edges_used += 1
+                if edges_used +1 == N:
+                    break
+        return cost
