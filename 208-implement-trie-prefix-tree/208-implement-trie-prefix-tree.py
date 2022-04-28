@@ -16,7 +16,7 @@ class Trie:
             cur = cur.all[ord(c)- ord("a")]
         cur.end = True
         
-    def search(self, word: str) -> bool:
+    def search(self, word: str, isPrefix = False ) -> bool:
         cur = self.root
         for i,c in enumerate(word):
             if cur.all[ord(c) - ord("a")]:
@@ -24,16 +24,10 @@ class Trie:
                 
             else:
                 return False
-        return cur.end
+        return cur.end or isPrefix
 
     def startsWith(self, prefix: str) -> bool:
-        cur = self.root
-        for i, c in enumerate(prefix):
-            if cur.all[ord(c) - 97]:
-                cur = cur.all[ord(c) - 97]
-            else:
-                return False
-        return True
+        return self.search(prefix, True)
 
 
 # Your Trie object will be instantiated and called as such:
