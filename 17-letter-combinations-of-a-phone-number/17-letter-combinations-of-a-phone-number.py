@@ -1,5 +1,6 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
+        if digits == "": return []
         numbers = {2: ['a', 'b','c'],
                   3: ['d', 'e','f'],
                   4: ['g', 'h','i'],
@@ -12,8 +13,7 @@ class Solution:
         results = []
         def dfs(i, temp):
             if i == len(digits):
-                if temp:
-                    results.append("".join(temp))
+                results.append("".join(temp))
                 return 
             
 
