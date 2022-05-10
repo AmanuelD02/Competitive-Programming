@@ -1,20 +1,25 @@
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
         result = []
-        def combination(i, temp):
-            if i == k or sum(temp) > n:
-                if sum(temp) == n and sorted(temp) not in result: 
-                    result.append(sorted(temp))
+        def combination(path, start, current_sum):
+            if len(path) == k:
+                if current_sum == n:
+                    result.append(path.copy())
                 return
-                        
-            for j in range(1,10):
-                if j not in temp:
-                    temp.append(j)
-                    combination(i + 1, temp)
-                    temp.pop()
+            if current_sum > n:
+                return
+            
+            for num in range(start, 10):
+                path.append(num)
+                current_sum += num
+                combination(path, num + 1, current_sum)
+                
+                path.pop()
+                current_sum -= num
         
-        
-        combination(0, [])
+        combination([], 1, 0)
         return result
-        
+                
+            
+            
             
