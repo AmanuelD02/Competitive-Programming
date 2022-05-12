@@ -1,18 +1,21 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        result = set()
+        result = []
         N = len(nums)
-        nums = deque(nums)
-        def permute(path):
+        unique = collections.Counter(nums)
+        def permutation(path):
             if len(path) == N:
-                res = tuple(path)
-                if res not in result:
-                    result.add(res)
-                    return
+                result.append(path.copy())
+                return
             
-            for i in range(N - len(path)):
-                path.append(nums.popleft())
-                permute(path)
-                nums.append(path.pop())
-        permute([])
-        return [ list(x) for x in result]
+            for num in unique:
+                if unique[num]:
+                    unique[num] -= 1
+                    path.append(num)
+                    permutation(path)
+                    unique[num] += 1
+                    path.pop()
+        
+        permutation([])
+        return result
+                    
