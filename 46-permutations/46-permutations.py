@@ -3,8 +3,7 @@ class Solution:
         result = []
         N = len(nums)
         nums = deque(nums)
-        print(N)
-        def permute(start, path):
+        def permute(path):
             if len(path) == N:
                 result.append(path.copy())
                 return
@@ -12,11 +11,11 @@ class Solution:
             for i in range(N - len(path)):
                 path.append(nums.popleft())
                 
-                permute(i+1, path)
+                permute(path)
                 
                 nums.append(path.pop())
                 
                 
-        permute(0, [])
+        permute([])
         return result
         
