@@ -11,13 +11,13 @@ class Solution:
                 graph["".join(w)].add(word)
                 w[i] = temp
         
-        counter = 0
+        counter = 1
         queue.append(beginWord)
         while queue:
             for i in range(len(queue)):
                 word = queue.popleft()
                 if word == endWord:
-                    return counter + 1
+                    return counter 
                 if word in visited:
                     continue
                 w = list(word)
@@ -25,10 +25,7 @@ class Solution:
                     temp = w[i]
                     w[i] = '*'
                     nextWords = graph["".join(w)]
-                    if nextWords:
-                        for ww in nextWords:
-                            if ww not in visited:
-                                queue.append(ww)
+                    queue.extend(nextWords)
                     w[i] = temp
                 visited.add(word)
             counter += 1
