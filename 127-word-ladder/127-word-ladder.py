@@ -20,6 +20,7 @@ class Solution:
                     return counter 
                 if word in visited:
                     continue
+                    
                 w = list(word)
                 for i in range(len(w)):
                     temp = w[i]
@@ -28,6 +29,7 @@ class Solution:
                     queue.extend(nextWords)
                     w[i] = temp
                 visited.add(word)
+                
             counter += 1
         
         return 0
