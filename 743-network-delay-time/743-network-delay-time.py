@@ -1,15 +1,31 @@
+from collections import defaultdict
 class Solution:
     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
-        q, t, adj = [(0, K)], {}, collections.defaultdict(list)
-        for u, v, w in times:
-            adj[u].append((v, w))
-        while q:
-            time, node = heapq.heappop(q)
-            if node not in t:
-                t[node] = time
-                for v, w in adj[node]:
-                    heapq.heappush(q, (time + w, v))
-        return max(t.values()) if len(t) == N else -1
+        graph = defaultdict(lambda : defaultdict(int))
+        for s, d, t in times:
+            graph[s][d] = t
+        
+        Time = 0
+        heap, visited = [], set()
+        heap.append((0, K))
+        while heap:
+            time, node = heappop(heap)
+            if node in visited: 
+                continue
+            visited.add(node)
+            Time = max(Time, time)
+            for neigh in graph[node]:
+                if neigh not in visited:
+                    heappush(heap, (time + graph[node][neigh], neigh))
+        
+        if len(visited) == N:
+            return Time
+        return -1
+                    
+            
+            
+        
+        
             
         
         
