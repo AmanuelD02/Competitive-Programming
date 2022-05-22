@@ -1,10 +1,21 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        dp = [(amount + 1)] * (amount + 1)
-        dp[0] = 0
-        for i in range(1, amount + 1):
-            for c in coins:
-                if i - c >= 0:
-                    dp[i] = min(dp[i], 1 + dp[i - c])
+        @lru_cache(None)
+        def dp(is_left):
+            if is_left == 0:
+                return 0
+            
+            best = amount + 1
+            for coin in coins:
+                if (is_left - coin) >=  0:
+                    best = min(best, 1 + dp(is_left - coin))
+            
+            return best
         
-        return dp[-1] if dp[-1] != amount +1 else -1
+        for i in range(1, amount):
+            dp(i)
+        ans = dp(amount)
+        return ans if ans != amount + 1 else -1
+            
+        
+            
