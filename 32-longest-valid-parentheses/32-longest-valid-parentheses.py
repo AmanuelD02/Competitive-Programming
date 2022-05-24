@@ -1,27 +1,16 @@
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
-        longest = 0
-        stack = []
-        mergeInterval = []
-        for i,j in enumerate(s):
-            if j == "(":
-                stack.append(i)
-            elif stack:
-                mergeInterval.append((stack.pop(), i))
+        if not s: return 0
+        dp = [0] * len(s)
+        opening = 0
+        for i, j in enumerate(s):
+            if j == ')':
+                if i ==0: continue
+                if s[i -1] =='(':
+                    dp[i] = 2 + dp[i - 2]
+                elif  i - dp[i-1] - 1 >=0 and s[i -dp[i-1] -1] == '(':
+                    dp[i] = dp[i-1] + dp[i - dp[i-1]-2] + 2
         
-        if mergeInterval:
-            longest = mergeInterval[0][1] - mergeInterval[0][0] + 1
-        mergeInterval.sort()
-        l = 0
-        r = 1
-        while(r < len(mergeInterval)):
-            if mergeInterval[l][1] + 1 >= mergeInterval[r][0]:
+        return max(dp)
                 
-                mergeInterval[l] = (mergeInterval[l][0], max(mergeInterval[l][1], mergeInterval[r][1] ))
-                longest = max(longest, mergeInterval[l][1] - mergeInterval[l][0] + 1)
-            else:
-                l = r    
-            r += 1
-        
-        
-        return longest
+                
