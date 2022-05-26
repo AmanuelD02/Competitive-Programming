@@ -1,4 +1,5 @@
 class Solution:
+    @lru_cache(None)
     def hammingWeight(self, n: int) -> int:
         count = 0
         while n:
