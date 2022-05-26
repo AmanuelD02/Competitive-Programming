@@ -16,6 +16,5 @@ class Solution:
                 pairs.append((a,b))
             if len(pairs) > 2:
                 return False
-        if len(pairs) != 2: return False
         
-        return pairs[0] == pairs[1][::-1]
+        return len(pairs) == 2 and pairs[0] == pairs[1][::-1]
