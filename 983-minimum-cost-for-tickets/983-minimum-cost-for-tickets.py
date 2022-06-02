@@ -2,18 +2,6 @@ class Solution:
     def mincostTickets(self, days: List[int], costs: List[int]) -> int:
         N = len(days)
         days.sort()
-        print(days)
-        def nextIndex(curr, target):
-            left, right = curr+1,  N - 1
-            while left <= right:
-                mid = (left + right) //2
-                # print(mid)
-                if days[mid] < target:
-                    left = mid + 1
-                else:
-                    right = mid
-                    
-            return left
         
         @cache
         def dp(i):
