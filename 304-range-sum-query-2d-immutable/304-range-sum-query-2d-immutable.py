@@ -5,14 +5,17 @@ class NumMatrix:
         for i in range(len(matrix)):
             for j in range(1, len(matrix[0])):
                 matrix[i][j] += matrix[i][j-1]
+        for i in range(len(matrix[0])):
+            for j in range(1, len(matrix)):
+                matrix[j][i] += matrix[j-1][i]
+                
         for i in range(len(matrix)):
             matrix[i].append(0)
+        matrix.append([0 for x in range(len(matrix[0]))])
         
+        print(matrix)
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
-        total = 0
-        for i in range(row1, row2+1):
-            total +=  (self.matrix[i][col2] - self.matrix[i][col1 - 1])
-        return total
+        return self.matrix[row2][col2] - self.matrix[row2][col1-1] - self.matrix[row1-1][col2] + self.matrix[row1 -1][col1 -1]
 
 
 # Your NumMatrix object will be instantiated and called as such:
