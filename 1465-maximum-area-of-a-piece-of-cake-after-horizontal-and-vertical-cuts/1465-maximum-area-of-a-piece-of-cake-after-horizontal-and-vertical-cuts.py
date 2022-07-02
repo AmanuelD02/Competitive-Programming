@@ -4,8 +4,7 @@ class Solution:
         verticalCuts.extend([0, w])
         horizontalCuts.sort()
         verticalCuts.sort()
-        h_max = 0
-        v_max = 0
+        v_max = h_max = 0
         for i in range(len(horizontalCuts)-1):
             h_max = max(h_max, horizontalCuts[i + 1] - horizontalCuts[i])
         for j in range(len(verticalCuts) - 1):
