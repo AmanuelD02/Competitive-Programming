@@ -8,9 +8,7 @@ class Solution:
         
         for i in range(M):
             for j in range(N):
-                parent[i][j] = (i, j)
-        
-        
+                parent[i][j] = (i, j)     
         def find(node):
             i, j = node
             if parent[i][j] != (i, j):
@@ -18,17 +16,14 @@ class Solution:
             
             return parent[i][j]
         
-        
         def union(node1, node2):
             parent1, parent2 = find(node1), find(node2)
             if parent1 != parent2:
-                # print(parent1, parent2)
                 parent1, parent2 = sorted([parent1, parent2], key = lambda x: child[x[0]][x[1]] )
                 i, j = parent1
                 a, b = parent2
                 child[a][b] += child[i][j]
                 parent[i][j] = parent2
-                # child[i][j] = 0
                 
         
         for i in range(M):
@@ -39,7 +34,6 @@ class Solution:
                         if in_bound(r,c) and grid[r][c]:
                             union((r,c), (i,j))
         
-        # print(child)
         max_area = 0
         for i in range(M):
             for j in range(N):
