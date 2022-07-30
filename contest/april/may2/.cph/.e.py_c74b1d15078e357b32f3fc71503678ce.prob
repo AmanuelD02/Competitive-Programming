@@ -1,0 +1,1 @@
+{"name":"Local: e","url":"d:\\CODES\\Competitive-Programming\\contest\\april\\may2\\e.py","tests":[{"id":1652733629242,"input":"5\n1 2\n2 8\n4 5\n1 5\n100000 200000","output":"1\n3\n0\n2\n31072"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\CODES\\Competitive-Programming\\contest\\april\\may2\\e.py","group":"local","local":true}
