@@ -6,28 +6,17 @@
 #         self.right = right
 class Solution:
     def pseudoPalindromicPaths (self, root: Optional[TreeNode]) -> int:
-        def validator(freq):
-            p = 0
-            # print(freq)
-            for k, f in freq.items():
-                if f % 2 ==1 and p > 0: return 0
-                elif f%2 == 1: p+=1
-            return 1
-        answer = 0
-        def dfs(node, store):
-            nonlocal answer
-            if  node:
-                store[node.val] += 1
-                left = dfs(node.left, store)
-                right = dfs(node.right, store)
-                store[node.val] -= 1
-                if not node.left and not node.right:
-                    answer += left
-                return 0
-            return validator(store)
         
-        store = defaultdict(int)
-        dfs(root, store)
-        return answer
+        def dfs(node, count = 0):
+            if not node: return 0
+            count ^= 1 << (node.val - 1)
+            res = dfs(node.left, count ) + dfs(node.right, count)
+            if not node.right and not node.left:
+                if count & (count -1) == 0:
+                    res += 1
+            return res
+        return dfs(root)
+                    
+                
             
                 
