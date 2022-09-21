@@ -11,12 +11,8 @@ class Solution:
                     continue
                 elif stack and stack[-1] > 0 and stack[-1] > abs(asteroid):
                     continue
-                
-                
-                stack.append(asteroid)
-                
-            else:
-                stack.append(asteroid)
+            
+            stack.append(asteroid)
                 
         
         return stack
