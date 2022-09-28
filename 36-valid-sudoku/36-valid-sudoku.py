@@ -1,37 +1,22 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        def checkRow():
-            for r in range(9):
-                store = set()
-                for c in range(9):
-                    if board[r][c] == '.': continue
-                    if board[r][c] in store: return False
-                    store.add(board[r][c])
-            return True
-
-        def checkCol():
-            for c in range(9):
-                store = set()
-                for r in range(9):
-                    if board[r][c] == '.': continue
-                    if board[r][c] in store: return False
-                    store.add(board[r][c])
-            return True
-        
-        def checkBox(r,c):
-            store = set()
-            for rr in range(r,r+3):
-                for cc in range(c, c+3):
-                   
-                    if board[rr][cc] == '.': continue
-                    if board[rr][cc] in store: return False
-                    store.add(board[rr][cc])
-            return True
-        indx = [0,3,6]
-        for r in indx:
-            for c in indx:
-                if not checkBox(r,c): return False
-    
-        return checkRow() and checkCol()
+        isVisited = set()
+        row = lambda x,y: f'{y} {x} row'
+        col = lambda x,y: f'{y} {x} col'
+        block = lambda x,y,z: f'{z} {x} - {y} block'
+        for i in range(9):
+            for j in range(9):
+                cur = board[i][j]
+                if cur !='.':
+                    # print(isVisited)
+                    
+                    if not( row(i,cur) in isVisited or 
+                           col(j,cur) in isVisited or
+                           block(i//3,j//3, cur) in isVisited):
+                        isVisited.add(row(i,cur))
+                        isVisited.add(col(j,cur))
+                        isVisited.add(block(i//3,j//3,cur))
+                    else: return False
+        return True
         
                     
