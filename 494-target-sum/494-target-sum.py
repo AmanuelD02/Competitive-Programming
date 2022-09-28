@@ -1,15 +1,20 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        @lru_cache(None)
-        def dp(i, amount):
-            if i ==len(nums):
-                return 1 if amount == target else 0
+        total = sum(nums)
+        if abs(target) > total: return 0
+        
+        dp = [0] * (2*total + 1)
+        dp[total] = 1
+        for i, num in enumerate(nums):
+            next = [0] * (2*total + 1)
+            for s in range(2*total+1):
+                if dp[s] != 0:
+                    next[s + num] += dp[s]
+                    next[s - num] += dp[s]
 
-            total = 0
-            total += dp(i + 1, amount - nums[i])
-            total += dp(i + 1, amount + nums[i])
+            dp = next
+        
+        return dp[total + target]
+
             
-            return total
         
-        
-        return dp(0,0)
