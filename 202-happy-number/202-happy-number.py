@@ -1,11 +1,9 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
         if n ==1: return True
-        store = set()
-        while True:
-            if n in store: break
-            if n==1: break
-            store.add(n)
+        seen = set()
+        while n!=1 and n not in seen:
+            seen.add(n)
             sums = 0
             while n >0:
                 sums += (n%10)**2
