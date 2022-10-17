@@ -1,14 +1,11 @@
 class Solution:
     def reverseBits(self, n: int) -> int:
-        reversed = []
-        while n:
+        reversed = 0
+        for i in range(1, 33):
             c = n & 1
-            reversed.append(str(c))
+            reversed +=  c * (2**(32 - i))
             n = n >> 1
-        for i in range(len(reversed),  32):
-            reversed.append("0")
-        return int("".join(reversed), 2)
-        
+        return reversed
         
         
             
