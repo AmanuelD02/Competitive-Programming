@@ -9,27 +9,20 @@ class Node:
 class Solution:
     def cloneGraph(self, start: 'Node') -> 'Node':
         if not start: return
-        nodes = {}
-        visited = set()
-        def dfs(node):
-            if not node:
-                return
-            visited.add(node)
-            if node not in nodes:
-                nodes[node] = Node(node.val)
-            cur_copy = nodes[node]
+        queue, clones = deque([start]), {start: Node(start.val)}
+        while queue:
+            cur = queue.popleft()
+            cur_clone = clones[cur]
             
-            for neigh in node.neighbors:
-                if neigh not in nodes:
-                    nodes[neigh] = Node(neigh.val)
-                cur_copy.neighbors.append(nodes[neigh])
-                if neigh not in visited:
-                    dfs(neigh)
+            for neigh in cur.neighbors:
+                if neigh not  in clones:
+                    queue.append(neigh)
+                    clones[neigh] = Node(neigh.val)
+                
+                cur_clone.neighbors.append(clones[neigh])
         
-        dfs(start)
-        return nodes[start]
-
-            
+        
+        return clones[start]
 
                 
         
