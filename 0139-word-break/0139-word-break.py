@@ -19,7 +19,6 @@ class Trie:
         curr = self.root
         ends = []
         for i, char in enumerate(word):
-            # print(i,char, word,curr.end)
             if char not in curr.nodes:
                 return ends
             curr = curr.nodes[char]
@@ -37,12 +36,10 @@ class Solution:
         
         @lru_cache(None)
         def dp(i):
-            # print(i,"start")
             if i == len(s):
                 return True
             jump = False
             ends = trie.isPrefix(s[i:])
-            # print("ends", ends)
             for end in ends:
                 jump = jump or dp(i + end + 1)
             
