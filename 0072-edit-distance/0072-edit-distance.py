@@ -3,22 +3,19 @@ class Solution:
         w1_size = len(word1)
         w2_size = len(word2)
         
-        @lru_cache(None)
-        def dp(w1, w2):
-            if w1 >= w1_size and w2 >= w2_size:
-                return 0
-            elif w1 >= w1_size:
-                return w2_size - w2
-            elif w2 >= w2_size:
-                return w1_size - w1
+        dp = [[0] * (w1_size + 1) for _ in range(w2_size + 1)]
+        # BASE CASE
+        for i in range(w1_size + 1):
+            dp[-1][i] = w1_size - i
             
-            if word1[w1] == word2[w2]:
-                return dp(w1 + 1, w2 + 1)
-            
-            insert_ops = 1 + dp(w1, w2 + 1)
-            delete_ops = 1  + dp(w1 + 1, w2)
-            replace_ops = 1 + dp(w1 + 1, w2 + 1)
-            
-            return min(insert_ops, delete_ops, replace_ops)
+        for i in range(w2_size + 1):
+            dp[i][-1] = w2_size - i
         
-        return dp(0, 0)
+        for i in range(w2_size - 1, -1, -1):
+            for j in range(w1_size - 1 , -1, -1):
+                if word2[i] == word1[j]:
+                    dp[i][j] = dp[i + 1][j + 1]
+                else:
+                    dp[i][j] = 1 + min(dp[i + 1][j + 1], dp[i + 1][j], dp[i][j + 1])
+        
+        return dp[0][0]
