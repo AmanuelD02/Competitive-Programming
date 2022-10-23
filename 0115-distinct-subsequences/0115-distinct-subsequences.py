@@ -1,17 +1,16 @@
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
+        s_size, t_size = len(s), len(t)
         
-        @lru_cache(None)
-        def dp(i, j):
-            if j >= len(t):
-                return 1
-            elif i >= len(s):
-                return 0
-            
-            
-            if s[i] == t[j]:
-                return dp(i + 1, j + 1) +  dp(i + 1, j)
-            
-            return dp(i + 1, j)
+        dp = [[0] * (s_size + 1) for _ in range(t_size + 1)]
         
-        return dp(0,0)
+        for i in range(s_size + 1):
+            dp[-1][i] = 1
+            
+        for i in range(t_size - 1, -1, -1):
+            for j in range(s_size - 1, -1, -1):
+                if t[i] == s[j]:
+                    dp[i][j] += dp[i + 1][j + 1]
+                dp[i][j] += dp[i][j + 1]
+                
+        return dp[0][0]
