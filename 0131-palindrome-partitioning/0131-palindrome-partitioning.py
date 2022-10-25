@@ -1,26 +1,22 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         s_size = len(s)
-        def dp(start, end):
-            if end >= s_size:
+        
+        @cache
+        def dp(start = 0):
+            nonlocal s_size
+            if start == s_size:
                 return [[]]
-            select = [[]]
-            if s[start: end + 1] == s[start: end + 1][::-1]:
-                select = dp(end + 1, end + 1)
-                for word in select:
-                    # if len(word) == 0: continue
-                    word.append(s[start: end + 1])
-            not_select = dp(start, end + 1)
             
+            ans = []
             
-            return select[:] + not_select[:]
+            for end in range(start + 1, s_size + 1):
+                curr = s[start:end]
+                if curr == curr[::-1]:
+                    for result in dp(end):
+                        ans.append([curr] + result)
             
-        ans = dp(0, 0)
-        new_ans = []
-        for lst in ans:
-            counter = 0
-            for a in lst:
-                counter += len(a)
-            if counter == s_size:
-                new_ans.append(reversed(lst))
-        return new_ans
+            return ans
+
+            
+        return dp()
