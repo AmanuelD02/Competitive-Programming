@@ -8,19 +8,14 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         
         
-        ans = True
-        def dfs(node):
-            nonlocal ans
-            if not node:
-                return 0
-            left = 1 + dfs(node.left)
-            right = 1 + dfs(node.right)
-            
-            
-            if abs(left - right) > 1:
-                ans = False
-            
-            return max(left , right)
         
-        dfs(root)
-        return ans
+        def dfs(node):
+            if not node:
+                return (0, True)
+            left = dfs(node.left)
+            right = dfs(node.right)
+            isValid = abs(left[0] - right[0]) <= 1 and left[1] and right[1]
+            return (1 + max(left[0] , right[0]),isValid)
+        
+        return dfs(root)[1]
+
