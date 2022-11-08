@@ -17,10 +17,8 @@ class Solution:
         if not (fast and fast.next):
             return None
         
-        index = 0
         while head != slow:
             head = head.next
             slow = slow.next
-            index += 1
         
         return head
