@@ -20,7 +20,7 @@ class Solution:
             elif nums[mid] >= nums[right] and nums[left] < nums[mid]:
                 left = mid + 1
             else:
-                return min(nums[left], nums[right])
+                return nums[left]
         
         return nums[left]
             
