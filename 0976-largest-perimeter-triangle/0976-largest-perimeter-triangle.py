@@ -3,20 +3,8 @@ class Solution:
         n = len(nums)
         nums.sort(reverse = True)
         
-        for i in range(0,n):
-            for j in range(i + 1, n):
-                a_b = nums[i] + nums[j]
-                
-                for k in range(j+1, n):
-                    if a_b > nums[k] and nums[k] + nums[i] > nums[j] \
-                        and nums[j] + nums[k] > nums[i]:
-                        return a_b + nums[k]
-                    break
-        
-        
-        
-        
-        
-        
+        for i in range(0,n-2):
+            if nums[i] < nums[i + 1] +  nums[i + 2]:
+                return nums[i] + nums[i + 1] + nums[i + 2]        
         
         return 0
