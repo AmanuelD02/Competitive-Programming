@@ -1,77 +1,41 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        stack  = self.stringToStack(s)
+        s = s.replace(" ", "")
+        N = len(s)
+        stack, curNum = [], []
+        ops = "+-*/"
+        i, sign = 0, 1
         
-        
-        postfix = self.convertToPostFix(stack)
-        res = self.evaluatePostFix(postfix)
-        
-        return res
+        while i < N:
+            curr = s[i]
 
-        
-    def stringToStack(self, s: str) -> List:
-        stack, nums = [], []
-        
-        for i in s:
-            if i.isdigit():
-                nums.append(i)
-            else:
-                if nums:
-                    stack.append(int("".join(nums)))
-                    
-                if i != ' ':
-                    stack.append(i)
-                
-                nums = []
-        
-        
-        if nums:
-            stack.append(int("".join(nums)))
-        
-        return stack
-
-        
-    def convertToPostFix(self, stack):
-        ops = {"+", "-", "*", "/"}
-        resultStack, postFix = [], []
-        precedence = {}
-        
-        precedence['/'] =  precedence['*'] = 4
-        precedence['+'] =  precedence['-'] = 2
-        
-        for i, curr in enumerate(stack):
-            if str(curr) in ops:
-                while postFix and precedence[postFix[-1]] >= precedence[curr]:
-                    resultStack.append(postFix.pop())
+            if curr not in ops:
+                curNum.append(curr)
+            elif curr == "+" or curr == "-":
+                num1 = sign * int("".join(curNum)) if curNum else stack.pop()
+                stack.append(num1)
+                curNum = []
+                sign = -1 if curr == "-" else 1
+            elif curr == "*" or curr =="/":
+                num1 = sign * int("".join(curNum)) if curNum else stack.pop()
+                sign  = 1
+                curNum = []
+                i+= 1
+                while i < N and s[i].isdigit():
+                    curNum.append(s[i])
+                    i += 1
+                num2 = int("".join(curNum))
+                if curr == "*":
+                    stack.append(num1*num2)
+                else:
+                    stack.append(int(num1/num2))
+                curNum = []
+                i -= 1
+            i += 1
+        # print(stack, curNum, sign)
+        if curNum:
+            stack.append(sign * int("".join(curNum)))
+        return sum(stack)
             
-                postFix.append(curr)
-            else:
-                resultStack.append(curr)
                 
-        postFix.reverse()
-        return resultStack + postFix
-    
-    
-    def evaluate(self, num1,num2, operator):
-        return int(eval(str(num1) + operator + str(num2)))
-                
-    
-    def evaluatePostFix(self, stack):
-        ops = {"+", "-", "*", "/"}
-        resultStack = []
-        
-        for curr in stack:
-            if curr in ops:
-                num1 = resultStack.pop()
-                num2 = resultStack.pop()
-                
-                res  = self.evaluate(num2, num1, curr)
-                
-                resultStack.append(res)
-                
-            else:
-                resultStack.append(curr)
-        
-        return resultStack.pop()
-        
         
