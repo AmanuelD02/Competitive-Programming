@@ -8,15 +8,12 @@ class Solution:
         
         return power[k - 1][1]
     
-    
+    @lru_cache(None)
     def transform(self, num):
-        count = 0
-        while num != 1:
-            if num % 2 == 0:
-                num //= 2
-            else:
-                num = 3*num + 1
-            
-            count += 1
+        if num == 1:
+            return 0
         
-        return count
+        if num %2 == 0:
+            return 1 + self.transform(num//2)
+        
+        return 1 + self.transform(3*num + 1)
