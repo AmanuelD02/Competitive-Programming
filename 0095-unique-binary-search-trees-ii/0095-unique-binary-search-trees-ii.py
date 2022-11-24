@@ -11,7 +11,8 @@ class Solution:
     @lru_cache(None)
     def helper(self, start, end):
         if start > end:
-            return []
+            return [None]
+    
         if start == end:
             return [TreeNode(start)]
         
@@ -20,15 +21,12 @@ class Solution:
         for i in range(start, end + 1):
             mid = i
             
-        
             leftSide = self.helper(start, mid - 1)
             rightSide = self.helper(mid + 1, end)
-            if not leftSide:
-                leftSide.append(None)
-            if not rightSide:
-                rightSide.append(None)
+
             for left in leftSide:
                 for right in rightSide:
+                    
                     root = TreeNode(mid)
                     root.left = left
                     root.right = right
