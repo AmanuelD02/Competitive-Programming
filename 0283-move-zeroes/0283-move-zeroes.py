@@ -3,24 +3,12 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        count_zero = 0
-        n = len(nums)
-        for num in nums:
+        zeros = deque()
+        for i, num in enumerate(nums):
             if num == 0:
-                count_zero += 1
+                zeros.append(i)
+            elif len(zeros) >= 1:
+                cur = zeros.popleft()
+                nums[cur], nums[i] = nums[i], nums[cur]
+                zeros.append(i)
         
-        if count_zero == 0 or count_zero == n:
-            return nums
-        
-        i = 0
-        
-        for j, num in enumerate(nums):
-            if num != 0:
-                if i != j:
-                    nums[j] = 0
-                    
-                nums[i] = num
-                i += 1
-        
-
-            
