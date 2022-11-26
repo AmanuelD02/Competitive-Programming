@@ -22,7 +22,7 @@ class Solution:
                     if stack and stack[-1].val > cur.val:
                         break
                         
-                if prev: prev.right = cur
+                prev.right = cur
             
             stack.append(cur)
         
