@@ -4,20 +4,17 @@ class Solution:
         
         left = 0
         right = max(candies)
-        best = left
         
-        while left <= right:
-            mid = ceil((left + right) /2)
+        while left < right:
+            mid = ceil((left + right) / 2)
            
             res = self.counter(candies, mid)
             if res < k:
-                # best = left
                 right = mid - 1
             else:
-                best = mid
-                left = mid + 1
+                left = mid
         
-        return best
+        return left
                 
     
     
