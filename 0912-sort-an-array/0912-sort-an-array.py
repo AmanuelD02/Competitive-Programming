@@ -1,27 +1,28 @@
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
-        size = 1
         N = len(nums)
                 
         if N < 2:
             return nums
         
-        while size < N:
-            low = 0
-            
-            while low < N - 1:
-                mid = min(N -1, low + size -1) 
-                high = min(N - 1, low + (size * 2) -1)
-                
-                self.merge(nums, low, mid, high)
-          
-                low += (size * 2)
-            
-            size *= 2
+        self.sort(nums, 0 , N - 1)
     
         
         return nums
     
+    
+    
+    def sort(self, nums, low, high):
+        if (high - low) < 1:
+            return
+        
+        mid = (low + high) //2
+        
+        leftSide = self.sort(nums, low, mid)
+        rightSide = self.sort(nums, mid + 1, high)
+        
+        self.merge(nums, low, mid, high)
+        
     
     def merge(self,nums, low, mid, high):
         p1 = 0
