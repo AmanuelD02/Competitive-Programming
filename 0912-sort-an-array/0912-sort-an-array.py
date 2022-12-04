@@ -13,7 +13,7 @@ class Solution:
     
     
     def sort(self, nums, low, high):
-        if (high - low) < 1:
+        if low >= high:
             return
         
         mid = (low + high) //2
