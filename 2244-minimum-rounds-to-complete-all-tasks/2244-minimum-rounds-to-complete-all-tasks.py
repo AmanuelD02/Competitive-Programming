@@ -6,7 +6,7 @@ class Solution:
         for elem in freq.values():
             if elem % 3 == 0:
                 total += elem // 3
-            elif elem != 1and elem % 3 == 1:
+            elif elem != 1 and elem % 3 == 1:
                 total += ((elem - 4) // 3) + 2
 
             elif  elem % 3 == 2:
