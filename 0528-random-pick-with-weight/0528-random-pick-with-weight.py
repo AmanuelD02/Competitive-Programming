@@ -1,10 +1,12 @@
 class Solution:
     def __init__(self, w: List[int]):
         self.other = []
-        Sum = sum(w)
-        for i in range(len(w)):
+        N, Sum = len(w), sum(w)
+        
+        for i in range(N):
             ratio = w[i]/ Sum
-            freq = ceil(ratio*(len(w)*10))
+            freq = ceil(ratio*(N*10))
+            
             self.other.extend([i] * freq)
         
     def pickIndex(self) -> int:
