@@ -14,12 +14,7 @@ class Solution:
             
             if s[i] == 'b':
                 B[i] += 1
-        
-#         print(A)
-#         print(B)
-#         print("--------------")
-        # if A[0] == 0:
-        #     return 0
+
         ans = float("inf")
         for i in range(N + 1):
             ans = min(ans, A[i] + B[i - 1])
